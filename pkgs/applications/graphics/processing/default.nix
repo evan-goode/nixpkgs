@@ -12,16 +12,22 @@ let
     sha256 = "B5CakOQ8225xNsk2TMV8CbK3RcsLlb+pHzjaY5JNwg0=";
   };
 
+  flatlaf = fetchurl {
+    name = "flatlaf-2.4.jar";
+    url = "https://repo1.maven.org/maven2/com/formdev/flatlaf/2.4/flatlaf-2.4.jar";
+    sha256 = "NVMYiCd+koNCJ6X3EiRx1Aj+T5uAMSJ9juMmB5Os+zc=";
+  };
+
 in
 stdenv.mkDerivation rec {
   pname = "processing";
-  version = "1279-4.0b4";
+  version = "1286-4.0.1";
 
   src = fetchFromGitHub {
     owner = "processing";
     repo = "processing4";
     rev = "processing-${version}";
-    sha256 = "G+1QEMLQZyH3l9uIGtdM5RTyF+J7F74VWGBEhC0IklM=";
+    sha256 = "sha256-U6qYHpkf7yCWnrl0GfDGgIrCN62AyNarRy/A1iUDlUQ=";
   };
 
   nativeBuildInputs = [ ant unzip makeWrapper wrapGAppsHook ];
@@ -31,18 +37,19 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     echo "tarring jdk"
-    tar --checkpoint=10000 -czf build/linux/jdk-17.0.1.tgz ${jdk}
+    tar --checkpoint=10000 -czf build/linux/jdk-17.0.4-amd64.tgz ${jdk}
     cp ${ant}/lib/ant/lib/{ant.jar,ant-launcher.jar} app/lib/
     mkdir -p core/library
     ln -s ${javaPackages.jogl_2_3_2}/share/java/* core/library/
     cp ${vaqua} app/lib/VAqua9.jar
+    cp ${flatlaf} app/lib/flatlaf.jar
     unzip -qo ${jna} -d app/lib/
     mv app/lib/{jna-5.10.0/dist/jna.jar,}
     mv app/lib/{jna-5.10.0/dist/jna-platform.jar,}
     cp -r ${batik}/* java/libraries/svg/library/
     cp java/libraries/svg/library/lib/batik-all-1.14.jar java/libraries/svg/library/batik.jar
     echo "tarring ffmpeg"
-    tar --checkpoint=10000 -czf build/shared/tools/MovieMaker/ffmpeg-4.4.gz ${ffmpeg}
+    tar --checkpoint=10000 -czf build/shared/tools/MovieMaker/ffmpeg-5.0.1.gz ${ffmpeg}
     cd build
     ant build
     cd ..
@@ -66,6 +73,6 @@ stdenv.mkDerivation rec {
     homepage = "https://processing.org";
     license = with licenses; [ gpl2Only lgpl21Only ];
     platforms = platforms.linux;
-    maintainers = with maintainers; [ matyklug ];
+    maintainers = with maintainers; [  ];
   };
 }
