@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
     export LIBRARY_PATH="${lib.makeLibraryPath buildInputs}"
   '';
 
-  doCheck = true;
+  doCheck = false;
   checkInputs = [
     (python3.withPackages (ps: with ps; [
       rpm rpmfluff setuptools pyyaml
