@@ -12088,6 +12088,8 @@ with pkgs;
 
   rpmextract = callPackage ../tools/archivers/rpmextract { };
 
+  rpminspect = callPackage ../development/tools/rpminspect { };
+
   rrdtool = callPackage ../tools/misc/rrdtool { };
 
   rscw = callPackage ../applications/radio/rscw { };
@@ -14749,6 +14751,8 @@ with pkgs;
   cdb = callPackage ../development/tools/database/cdb {
     stdenv = gccStdenv;
   };
+
+  cdson = callPackage ../development/libraries/cdson { };
 
   chez = callPackage ../development/compilers/chez {
     inherit (darwin) cctools;

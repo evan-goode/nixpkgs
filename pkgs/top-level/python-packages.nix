@@ -10776,7 +10776,9 @@ self: super: with self; {
 
   rpmfile = callPackage ../development/python-modules/rpmfile { };
 
-  rpmfluff = callPackage ../development/python-modules/rpmfluff { };
+  rpmfluff = callPackage ../development/python-modules/rpmfluff {
+    systemRpm = pkgs.rpm;
+  };
 
   rpy2 = callPackage ../development/python-modules/rpy2 { };
 

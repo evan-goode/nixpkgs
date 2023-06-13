@@ -31,6 +31,8 @@ stdenv.mkDerivation rec {
     LN="ln -sf"
     # nixpkgs doesn't have sbin, install makewhatis to bin
     SBINDIR="$PREFIX/bin"
+    LIBDIR="$PREFIX/lib"
+    INCLUDEDIR="$PREFIX/include"
     CC=${stdenv.cc.targetPrefix}cc
     AR=${stdenv.cc.bintools.targetPrefix}ar
     # Allow makewhatis(8) to follow symlinks from a manpath to the nix store
@@ -43,6 +45,8 @@ stdenv.mkDerivation rec {
     HAVE_WCHAR=1
     UTF8_LOCALE=${utf8Locale}
   '';
+
+  installTargets = [ "install" "lib-install" ];
 
   preConfigure = ''
     printf '%s' "$configureLocal" > configure.local
